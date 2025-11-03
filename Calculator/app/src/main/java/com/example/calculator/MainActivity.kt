@@ -93,14 +93,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Nút CE: Xóa giá trị toán hạng hiện tại về 0
         btnCE.setOnClickListener {
             currentNumber = "0"
             updateDisplay(currentNumber)
             isNewOperation = true
         }
 
-        // Nút C: Xóa phép toán, nhập lại từ đầu
         btnC.setOnClickListener {
             currentNumber = "0"
             firstOperand = 0
@@ -122,7 +120,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Nút +/-: Đổi dấu
         btnPlusMinus.setOnClickListener {
             if (currentNumber.isNotEmpty() && currentNumber != "0") {
                 val num = currentNumber.toIntOrNull() ?: 0
@@ -131,10 +128,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Nút dấu chấm (để cho tương lai nếu muốn mở rộng sang số thực)
         btnDot.setOnClickListener {
-            // Tạm thời không sử dụng cho số nguyên
-            // Có thể mở rộng sau
         }
     }
 

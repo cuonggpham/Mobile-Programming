@@ -21,7 +21,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var cbTerms: CheckBox
     private lateinit var btnRegister: Button
 
+    private lateinit var calendarContainer: android.widget.FrameLayout
+    private lateinit var scrollView: ScrollView
+
     private var isCalendarVisible = false
+    private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,25 +43,50 @@ class MainActivity : AppCompatActivity() {
         etEmail = findViewById(R.id.etEmail)
         cbTerms = findViewById(R.id.cbTerms)
         btnRegister = findViewById(R.id.btnRegister)
+        calendarContainer = findViewById(R.id.calendarContainer)
+        scrollView = findViewById(R.id.scrollView)
 
+        // Ẩn CalendarView ban đầu
+        calendarContainer.visibility = View.GONE
+        // Set ngày mặc định cho CalendarView
+        calendarView.date = System.currentTimeMillis()
+
+        // Ẩn/hiện CalendarView khi bấm Select
         btnSelect.setOnClickListener {
-            isCalendarVisible = !isCalendarVisible
-            if (isCalendarVisible) {
-                calendarView.visibility = View.VISIBLE
-            } else {
-                calendarView.visibility = View.GONE
-            }
+            toggleCalendarView()
         }
 
+        // Xử lý khi chọn ngày trên CalendarView
         calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
             val calendar = Calendar.getInstance()
             calendar.set(year, month, dayOfMonth)
-            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-            etBirthday.setText(dateFormat.format(calendar.time))
+            val selectedDate = dateFormat.format(calendar.time)
+            etBirthday.setText(selectedDate)
+            // Ẩn CalendarView sau khi chọn ngày
+            toggleCalendarView()
         }
 
         btnRegister.setOnClickListener {
             validateAndRegister()
+        }
+    }
+    private fun toggleCalendarView() {
+        isCalendarVisible = !isCalendarVisible
+        if (isCalendarVisible) {
+            calendarContainer.visibility = View.VISIBLE
+            // Force invalidate để đảm bảo CalendarView được render
+            calendarContainer.invalidate()
+            calendarContainer.requestLayout()
+            // Đợi layout render xong rồi mới scroll đến CalendarView
+            scrollView.postDelayed({
+                // Scroll để CalendarView hiển thị trong viewport
+                val scrollY = scrollView.scrollY
+                val calendarTop = calendarContainer.top
+                val targetScroll = scrollY + calendarTop - scrollView.paddingTop
+                scrollView.smoothScrollTo(0, targetScroll)
+            }, 150)
+        } else {
+            calendarContainer.visibility = View.GONE
         }
     }
 
