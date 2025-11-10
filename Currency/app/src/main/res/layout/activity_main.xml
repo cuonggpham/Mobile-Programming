@@ -9,7 +9,6 @@
     android:padding="16dp"
     tools:context=".MainActivity">
 
-    <!-- Title -->
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="0dp"
@@ -23,7 +22,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- From Currency Container -->
     <LinearLayout
         android:id="@+id/layoutFromCurrency"
         android:layout_width="0dp"
@@ -36,7 +34,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- From Currency Label and Amount -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -67,7 +64,6 @@
                 android:maxLines="1" />
         </LinearLayout>
 
-        <!-- From Currency Spinner -->
         <Spinner
             android:id="@+id/spinnerFromCurrency"
             android:layout_width="match_parent"
@@ -78,7 +74,6 @@
 
     </LinearLayout>
 
-    <!-- To Currency Container -->
     <LinearLayout
         android:id="@+id/layoutToCurrency"
         android:layout_width="0dp"
@@ -91,7 +86,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- To Currency Label and Amount -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -122,7 +116,6 @@
                 android:maxLines="1" />
         </LinearLayout>
 
-        <!-- To Currency Spinner -->
         <Spinner
             android:id="@+id/spinnerToCurrency"
             android:layout_width="match_parent"
@@ -133,7 +126,6 @@
 
     </LinearLayout>
 
-    <!-- Exchange Rate Info -->
     <TextView
         android:id="@+id/tvExchangeRate"
         android:layout_width="0dp"
@@ -158,7 +150,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Update Rates Button (Optional) -->
     <Button
         android:id="@+id/btnUpdateRates"
         android:layout_width="0dp"
@@ -171,7 +162,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Number Pad -->
     <GridLayout
         android:id="@+id/numberPad"
         android:layout_width="0dp"
@@ -184,7 +174,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Row 1: 7, 8, 9 -->
         <Button
             android:id="@+id/btn7"
             android:layout_width="0dp"
@@ -227,7 +216,6 @@
             android:textColor="@android:color/white"
             android:textSize="24sp" />
 
-        <!-- Row 2: 4, 5, 6 -->
         <Button
             android:id="@+id/btn4"
             android:layout_width="0dp"
@@ -270,7 +258,6 @@
             android:textColor="@android:color/white"
             android:textSize="24sp" />
 
-        <!-- Row 3: 1, 2, 3 -->
         <Button
             android:id="@+id/btn1"
             android:layout_width="0dp"
@@ -313,7 +300,6 @@
             android:textColor="@android:color/white"
             android:textSize="24sp" />
 
-        <!-- Row 4: CE, 0, . -->
         <Button
             android:id="@+id/btnCE"
             android:layout_width="0dp"

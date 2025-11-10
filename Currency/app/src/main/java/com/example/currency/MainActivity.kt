@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvUpdateTime: TextView
     private lateinit var btnUpdateRates: Button
 
-    // Number pad buttons
     private lateinit var btn0: Button
     private lateinit var btn1: Button
     private lateinit var btn2: Button
@@ -38,7 +37,6 @@ class MainActivity : AppCompatActivity() {
     private var isFromAmountFocused = true
     private var isUpdating = false
 
-    // Currency data class
     data class Currency(
             val code: String,
             val name: String,
@@ -46,7 +44,6 @@ class MainActivity : AppCompatActivity() {
             val rateToUSD: Double
     )
 
-    // List of at least 10 currencies with fixed exchange rates (to USD)
     private val currencies =
             listOf(
                     Currency("USD", "United States - Dollar", "$", 1.0),
@@ -87,7 +84,6 @@ class MainActivity : AppCompatActivity() {
         tvUpdateTime = findViewById(R.id.tvUpdateTime)
         btnUpdateRates = findViewById(R.id.btnUpdateRates)
 
-        // Number pad buttons
         btn0 = findViewById(R.id.btn0)
         btn1 = findViewById(R.id.btn1)
         btn2 = findViewById(R.id.btn2)
@@ -101,7 +97,6 @@ class MainActivity : AppCompatActivity() {
         btnDot = findViewById(R.id.btnDot)
         btnCE = findViewById(R.id.btnCE)
 
-        // Set focus listeners
         etFromAmount.setOnFocusChangeListener { _, hasFocus -> isFromAmountFocused = hasFocus }
 
         etToAmount.setOnFocusChangeListener { _, hasFocus -> isFromAmountFocused = !hasFocus }
@@ -116,11 +111,9 @@ class MainActivity : AppCompatActivity() {
         spinnerFromCurrency.adapter = adapter
         spinnerToCurrency.adapter = adapter
 
-        // Set default selections: Malaysia - Ringgit (index 4) and Fiji - Dollar (index 11)
-        spinnerFromCurrency.setSelection(4) // MYR
-        spinnerToCurrency.setSelection(11) // FJD
+        spinnerFromCurrency.setSelection(0) 
+        spinnerToCurrency.setSelection(10) 
 
-        // Spinner listeners
         spinnerFromCurrency.onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(

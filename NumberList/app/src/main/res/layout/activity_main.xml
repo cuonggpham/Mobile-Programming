@@ -7,7 +7,6 @@
     android:padding="16dp"
     tools:context=".MainActivity">
 
-    <!-- EditText for number input -->
     <EditText
         android:id="@+id/editTextNumber"
         android:layout_width="0dp"
@@ -20,9 +19,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Radio Group for number type selection -->
-    <RadioGroup
-        android:id="@+id/radioGroupNumberType"
+    <LinearLayout
+        android:id="@+id/radioContainer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -31,7 +29,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editTextNumber">
 
-        <!-- Row 1: Số lẻ, Số nguyên tố, Số hoàn hảo -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,7 +58,6 @@
                 android:text="@string/perfect_numbers" />
         </LinearLayout>
 
-        <!-- Row 2: Số chẵn, Số chính phương, Số Fibonacci -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -90,9 +86,8 @@
                 android:layout_weight="1"
                 android:text="@string/fibonacci_numbers" />
         </LinearLayout>
-    </RadioGroup>
+    </LinearLayout>
 
-    <!-- TextView for empty state message -->
     <TextView
         android:id="@+id/textViewEmpty"
         android:layout_width="0dp"
@@ -105,9 +100,8 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/radioGroupNumberType" />
+        app:layout_constraintTop_toBottomOf="@id/radioContainer" />
 
-    <!-- ListView for displaying numbers -->
     <ListView
         android:id="@+id/listViewNumbers"
         android:layout_width="0dp"
@@ -118,6 +112,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/radioGroupNumberType" />
+        app:layout_constraintTop_toBottomOf="@id/radioContainer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

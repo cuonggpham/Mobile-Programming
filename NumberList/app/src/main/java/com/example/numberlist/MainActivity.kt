@@ -11,11 +11,17 @@ import kotlin.math.sqrt
 class MainActivity : AppCompatActivity() {
 
     private lateinit var editTextNumber: EditText
-    private lateinit var radioGroupNumberType: RadioGroup
+    private lateinit var radioOdd: RadioButton
+    private lateinit var radioEven: RadioButton
+    private lateinit var radioPrime: RadioButton
+    private lateinit var radioSquare: RadioButton
+    private lateinit var radioPerfect: RadioButton
+    private lateinit var radioFibonacci: RadioButton
     private lateinit var listViewNumbers: ListView
     private lateinit var textViewEmpty: TextView
     private lateinit var adapter: ArrayAdapter<Int>
     private val numbersList = mutableListOf<Int>()
+    private var selectedRadioButton: RadioButton? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,15 +29,27 @@ class MainActivity : AppCompatActivity() {
 
         // Initialize views
         editTextNumber = findViewById(R.id.editTextNumber)
-        radioGroupNumberType = findViewById(R.id.radioGroupNumberType)
+        radioOdd = findViewById(R.id.radioOdd)
+        radioEven = findViewById(R.id.radioEven)
+        radioPrime = findViewById(R.id.radioPrime)
+        radioSquare = findViewById(R.id.radioSquare)
+        radioPerfect = findViewById(R.id.radioPerfect)
+        radioFibonacci = findViewById(R.id.radioFibonacci)
         listViewNumbers = findViewById(R.id.listViewNumbers)
         textViewEmpty = findViewById(R.id.textViewEmpty)
 
-        // Setup adapter
         adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, numbersList)
         listViewNumbers.adapter = adapter
 
-        // Add text change listener to EditText
+        selectedRadioButton = radioOdd
+        radioOdd.isChecked = true
+
+        val radioButtons =
+                listOf(radioOdd, radioEven, radioPrime, radioSquare, radioPerfect, radioFibonacci)
+        radioButtons.forEach { radioButton ->
+            radioButton.setOnClickListener { handleRadioButtonClick(it as RadioButton) }
+        }
+
         editTextNumber.addTextChangedListener(
                 object : TextWatcher {
                     override fun beforeTextChanged(
@@ -54,11 +72,16 @@ class MainActivity : AppCompatActivity() {
                 }
         )
 
-        // Add listener to RadioGroup
-        radioGroupNumberType.setOnCheckedChangeListener { _, _ -> updateNumberList() }
-
-        // Initial update
         updateNumberList()
+    }
+
+    private fun handleRadioButtonClick(clickedButton: RadioButton) {
+        if (selectedRadioButton != clickedButton) {
+            selectedRadioButton?.isChecked = false
+            selectedRadioButton = clickedButton
+            clickedButton.isChecked = true
+            updateNumberList()
+        }
     }
 
     private fun updateNumberList() {
@@ -73,9 +96,8 @@ class MainActivity : AppCompatActivity() {
 
         val maxNumber = inputText.toIntOrNull() ?: return
 
-        // Generate numbers based on selected type
         val numbers =
-                when (radioGroupNumberType.checkedRadioButtonId) {
+                when (selectedRadioButton?.id) {
                     R.id.radioOdd -> getOddNumbers(maxNumber)
                     R.id.radioEven -> getEvenNumbers(maxNumber)
                     R.id.radioPrime -> getPrimeNumbers(maxNumber)
@@ -102,17 +124,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Get odd numbers less than max
     private fun getOddNumbers(max: Int): List<Int> {
         return (1 until max).filter { it % 2 != 0 }
     }
 
-    // Get even numbers less than max
     private fun getEvenNumbers(max: Int): List<Int> {
         return (2 until max).filter { it % 2 == 0 }
     }
 
-    // Get prime numbers less than max
     private fun getPrimeNumbers(max: Int): List<Int> {
         if (max <= 2) return emptyList()
 
@@ -137,7 +156,6 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    // Get perfect square numbers less than max
     private fun getSquareNumbers(max: Int): List<Int> {
         val squares = mutableListOf<Int>()
         var i = 0
@@ -150,7 +168,6 @@ class MainActivity : AppCompatActivity() {
         return squares
     }
 
-    // Get perfect numbers less than max
     private fun getPerfectNumbers(max: Int): List<Int> {
         val perfects = mutableListOf<Int>()
         for (num in 2 until max) {
@@ -178,7 +195,6 @@ class MainActivity : AppCompatActivity() {
         return sum == n
     }
 
-    // Get Fibonacci numbers less than max
     private fun getFibonacciNumbers(max: Int): List<Int> {
         if (max <= 1) return emptyList()
 
