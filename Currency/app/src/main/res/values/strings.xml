@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Currency</string>
+    <string name="currency_title">Currency</string>
+    <string name="update_rates">Update rates</string>
 </resources>

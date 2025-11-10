@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">NumberList</string>
+    <string name="hint_enter_number">Nhập số nguyên</string>
+    <string name="odd_numbers">Số lẻ</string>
+    <string name="even_numbers">Số chẵn</string>
+    <string name="prime_numbers">Số nguyên tố</string>
+    <string name="square_numbers">Số chính phương</string>
+    <string name="perfect_numbers">Số hoàn hảo</string>
+    <string name="fibonacci_numbers">Số Fibonacci</string>
+    <string name="no_numbers">Không có số nào thỏa mãn</string>
 </resources>
