@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingVertical="8dp"
+    android:paddingHorizontal="16dp"
+    android:gravity="center_vertical">
+
+    <!-- App Icon (First Letter) -->
+    <TextView
+        android:id="@+id/appIcon"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:gravity="center"
+        android:text="S"
+        android:textSize="24sp"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:background="@color/purple_500" />
+
+    <!-- App Info -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginStart="16dp">
+
+        <TextView
+            android:id="@+id/appName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SHEIN-Shopping Online"
+            android:textSize="14sp"
+            android:textColor="#202124"
+            android:maxLines="1"
+            android:ellipsize="end" />
+
+        <TextView
+            android:id="@+id/appCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Shopping • Retailer"
+            android:textSize="12sp"
+            android:textColor="#5F6368"
+            android:maxLines="1"
+            android:layout_marginTop="2dp" />
+
+        <TextView
+            android:id="@+id/appRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4.1 ★"
+            android:textSize="11sp"
+            android:textColor="#5F6368"
+            android:layout_marginTop="4dp" />
+
+    </LinearLayout>
+
+    <!-- Install Button (optional) -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+</LinearLayout>
+

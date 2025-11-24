@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="gmail_red">#D93025</color>
+    <color name="fab_red">#EA4335</color>
+    <color name="selection_bar_bg">#F5F5F5</color>
+    <color name="avatar_blue">#5E97F6</color>
+    <color name="avatar_orange">#F4511E</color>
+    <color name="avatar_green">#9CCC65</color>
+    <color name="avatar_gray">#BDBDBD</color>
+</resources>
+

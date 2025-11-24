@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingVertical="16dp">
+
+    <!-- Category Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="12dp">
+
+        <!-- Sponsored label (for suggested category) -->
+        <TextView
+            android:id="@+id/sponsoredLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sponsored • "
+            android:textSize="12sp"
+            android:textColor="#5F6368"
+            android:visibility="gone" />
+
+        <!-- Category Title -->
+        <TextView
+            android:id="@+id/categoryTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Popular apps"
+            android:textSize="16sp"
+            android:textColor="#202124"
+            android:textStyle="bold" />
+
+        <!-- Arrow or Menu icon -->
+        <TextView
+            android:id="@+id/categoryIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="→"
+            android:textSize="20sp"
+            android:textColor="#5F6368" />
+
+    </LinearLayout>
+
+    <!-- RecyclerView for apps or columns -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/appsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+        android:clipToPadding="false" />
+
+</LinearLayout>
+
+
+

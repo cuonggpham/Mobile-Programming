@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:paddingStart="16dp"
+    android:paddingTop="12dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="12dp">
+
+    <!-- Avatar Circle -->
+    <TextView
+        android:id="@+id/avatarText"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="E"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@color/avatar_blue" />
+
+    <!-- Important Indicator -->
+    <TextView
+        android:id="@+id/importantIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="📌"
+        android:textSize="12sp"
+        android:visibility="gone"
+        app:layout_constraintStart_toEndOf="@id/avatarText"
+        app:layout_constraintTop_toTopOf="@id/senderName"
+        android:layout_marginStart="8dp"
+        tools:visibility="visible" />
+
+    <!-- Sender Name -->
+    <TextView
+        android:id="@+id/senderName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/timeText"
+        app:layout_constraintStart_toEndOf="@id/avatarText"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Edurila.com" />
+
+    <!-- Time -->
+    <TextView
+        android:id="@+id/timeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#757575"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="12:34 PM" />
+
+    <!-- Subject -->
+    <TextView
+        android:id="@+id/subjectText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="#424242"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@id/starIcon"
+        app:layout_constraintStart_toStartOf="@id/senderName"
+        app:layout_constraintTop_toBottomOf="@id/senderName"
+        tools:text="$19 Only (First 10 spots) - Bestselling..." />
+
+    <!-- Preview Text -->
+    <TextView
+        android:id="@+id/previewText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="#757575"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@id/starIcon"
+        app:layout_constraintStart_toStartOf="@id/senderName"
+        app:layout_constraintTop_toBottomOf="@id/subjectText"
+        tools:text="Are you looking to Learn Web Designing..." />
+
+    <!-- Star Icon -->
+    <ImageView
+        android:id="@+id/starIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:contentDescription="Star"
+        android:src="@drawable/ic_star_border"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/subjectText" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
