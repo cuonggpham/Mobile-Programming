@@ -3,36 +3,84 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="#FFFFFF">
 
     <EditText
-        android:id="@+id/edit_mssv"
+        android:id="@+id/edtId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="MSSV" />
+        android:hint="Mã số sinh viên"
+        android:textColorHint="#BDBDBD"
+        android:textSize="15sp"
+        android:paddingVertical="8dp"
+        android:background="@android:color/transparent"
+        android:inputType="number" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E0E0E0"
+        android:layout_marginBottom="8dp" />
 
     <EditText
-        android:id="@+id/edit_name"
+        android:id="@+id/edtName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Họ tên" />
+        android:hint="Họ tên"
+        android:textColorHint="#BDBDBD"
+        android:textSize="15sp"
+        android:paddingVertical="8dp"
+        android:background="@android:color/transparent"
+        android:inputType="textPersonName" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E0E0E0"
+        android:layout_marginBottom="8dp" />
 
     <EditText
-        android:id="@+id/edit_phone"
+        android:id="@+id/edtPhone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="SĐT" />
+        android:hint="Số điện thoại"
+        android:textColorHint="#BDBDBD"
+        android:textSize="15sp"
+        android:paddingVertical="8dp"
+        android:background="@android:color/transparent"
+        android:inputType="phone" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E0E0E0"
+        android:layout_marginBottom="8dp" />
 
     <EditText
-        android:id="@+id/edit_address"
+        android:id="@+id/edtAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Địa chỉ" />
+        android:hint="Địa chỉ"
+        android:textColorHint="#BDBDBD"
+        android:textSize="15sp"
+        android:paddingVertical="8dp"
+        android:background="@android:color/transparent"
+        android:inputType="text" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E0E0E0"
+        android:layout_marginBottom="16dp" />
 
     <Button
-        android:id="@+id/btn_add"
+        android:id="@+id/btnSave"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add" />
+        android:layout_height="40dp"
+        android:text="Lưu"
+        android:textColor="#FFFFFF"
+        android:textAllCaps="false"
+        android:background="@drawable/button_purple" />
 
 </LinearLayout>
