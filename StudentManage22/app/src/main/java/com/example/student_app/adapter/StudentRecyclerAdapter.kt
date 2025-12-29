@@ -12,8 +12,8 @@ import com.example.student_app.R
 import com.example.student_app.Student
 
 class StudentRecyclerAdapter(
-    private val onItemClick: (Int) -> Unit,
-    private val onDelete: (Int) -> Unit
+    private val onItemClick: (Student) -> Unit,
+    private val onDelete: (Student) -> Unit
 ) : ListAdapter<Student, StudentRecyclerAdapter.StudentViewHolder>(StudentDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentViewHolder {
@@ -27,11 +27,11 @@ class StudentRecyclerAdapter(
         holder.bind(student)
         
         holder.itemView.setOnClickListener {
-            onItemClick(holder.adapterPosition)
+            onItemClick(student)
         }
         
         holder.btnDelete.setOnClickListener {
-            onDelete(holder.adapterPosition)
+            onDelete(student)
         }
     }
 

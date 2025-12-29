@@ -1,68 +1,64 @@
 package com.example.student_app.viewmodel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.student_app.Student
+import com.example.student_app.data.StudentDatabase
+import com.example.student_app.data.StudentRepository
+import kotlinx.coroutines.launch
 
-class StudentViewModel : ViewModel() {
+class StudentViewModel(application: Application) : AndroidViewModel(application) {
     
-    private val _students = MutableLiveData<MutableList<Student>>()
-    val students: LiveData<MutableList<Student>> = _students
-    
-    // Dữ liệu tạm để binding với form thêm/sửa sinh viên
+    private val repository: StudentRepository
+    val students: LiveData<List<Student>>
+
     var tempId = MutableLiveData("")
     var tempName = MutableLiveData("")
     var tempPhone = MutableLiveData("")
     var tempAddress = MutableLiveData("")
-    
-    // Vị trí sinh viên đang được chỉnh sửa
-    var editingPosition = -1
+
+    var editingStudentId: String? = null
     
     init {
-        // Khởi tạo dữ liệu mẫu
-        _students.value = mutableListOf(
-            Student("Nguyễn Văn A", "20200001", "0901234567", "Hà Nội"),
-            Student("Trần Thị B", "20200002", "0901234568", "Hải Phòng"),
-            Student("Lê Văn C", "20200003", "0901234569", "Đà Nẵng")
-        )
+        val studentDao = StudentDatabase.getDatabase(application).studentDao()
+        repository = StudentRepository(studentDao)
+        students = repository.allStudents.asLiveData()
     }
     
     fun addStudent(student: Student) {
-        val currentList = _students.value ?: mutableListOf()
-        currentList.add(student)
-        _students.value = currentList
-    }
-    
-    fun updateStudent(position: Int, student: Student) {
-        val currentList = _students.value ?: mutableListOf()
-        if (position >= 0 && position < currentList.size) {
-            currentList[position] = student
-            _students.value = currentList
+        viewModelScope.launch {
+            repository.insert(student)
         }
     }
     
-    fun deleteStudent(position: Int) {
-        val currentList = _students.value ?: mutableListOf()
-        if (position >= 0 && position < currentList.size) {
-            currentList.removeAt(position)
-            _students.value = currentList
+    fun updateStudent(student: Student) {
+        viewModelScope.launch {
+            repository.update(student)
         }
     }
     
-    fun getStudent(position: Int): Student? {
-        return _students.value?.getOrNull(position)
+    fun deleteStudent(student: Student) {
+        viewModelScope.launch {
+            repository.delete(student)
+        }
     }
     
-    fun loadStudentForEditing(position: Int) {
-        editingPosition = position
-        val student = getStudent(position)
-        if (student != null) {
-            tempId.value = student.id
-            tempName.value = student.name
-            tempPhone.value = student.phone
-            tempAddress.value = student.address
+    fun deleteStudentById(id: String) {
+        viewModelScope.launch {
+            repository.deleteById(id)
         }
+    }
+    
+    fun loadStudentForEditing(student: Student) {
+        editingStudentId = student.id
+        tempId.value = student.id
+        tempName.value = student.name
+        tempPhone.value = student.phone
+        tempAddress.value = student.address
     }
     
     fun clearTempData() {
@@ -70,7 +66,7 @@ class StudentViewModel : ViewModel() {
         tempName.value = ""
         tempPhone.value = ""
         tempAddress.value = ""
-        editingPosition = -1
+        editingStudentId = null
     }
     
     fun createStudentFromTemp(): Student {

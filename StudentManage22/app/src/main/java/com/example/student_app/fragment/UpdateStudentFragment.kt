@@ -17,7 +17,6 @@ class UpdateStudentFragment : Fragment() {
     private val binding get() = _binding!!
     
     private val viewModel: StudentViewModel by activityViewModels()
-    private var studentPosition: Int = -1
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,13 +32,10 @@ class UpdateStudentFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
-        // Lấy vị trí sinh viên từ arguments
-        studentPosition = arguments?.getInt("studentPosition", -1) ?: -1
-        
         binding.btnUpdate.setOnClickListener {
             if (viewModel.isValidInput()) {
                 val updatedStudent = viewModel.createStudentFromTemp()
-                viewModel.updateStudent(viewModel.editingPosition, updatedStudent)
+                viewModel.updateStudent(updatedStudent)
                 viewModel.clearTempData()
                 findNavController().popBackStack()
             } else {

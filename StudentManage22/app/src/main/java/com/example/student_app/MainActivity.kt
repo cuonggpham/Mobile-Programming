@@ -12,12 +12,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         
-        // Thiết lập Navigation Controller
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-        
-        // Thiết lập ActionBar với Navigation
+
         val appBarConfiguration = AppBarConfiguration(setOf(R.id.studentListFragment))
         setupActionBarWithNavController(navController, appBarConfiguration)
     }

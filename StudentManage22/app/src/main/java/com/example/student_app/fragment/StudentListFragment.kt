@@ -39,15 +39,15 @@ class StudentListFragment : Fragment() {
 
     private fun setupRecyclerView() {
         adapter = StudentRecyclerAdapter(
-            onItemClick = { position ->
-                viewModel.loadStudentForEditing(position)
+            onItemClick = { student ->
+                viewModel.loadStudentForEditing(student)
                 val bundle = Bundle().apply {
-                    putInt("studentPosition", position)
+                    putString("studentId", student.id)
                 }
                 findNavController().navigate(R.id.action_list_to_update, bundle)
             },
-            onDelete = { position ->
-                viewModel.deleteStudent(position)
+            onDelete = { student ->
+                viewModel.deleteStudent(student)
             }
         )
         binding.recyclerView.adapter = adapter
