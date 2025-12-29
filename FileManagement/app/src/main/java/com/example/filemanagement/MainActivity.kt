@@ -21,8 +21,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.filemanagement.adapter.FileAdapter
 import com.example.filemanagement.databinding.ActivityMainBinding
 import com.example.filemanagement.databinding.DialogCreateFolderBinding
+import com.example.filemanagement.databinding.DialogCreateFileBinding
 import com.example.filemanagement.databinding.DialogFileOptionsBinding
 import com.example.filemanagement.databinding.DialogRenameFileBinding
+import com.example.filemanagement.databinding.DialogSelectFolderBinding
 import com.example.filemanagement.data.FileItem
 import com.example.filemanagement.viewmodel.FileManagerViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -124,8 +126,21 @@ class MainActivity : AppCompatActivity() {
     
     private fun setupFab() {
         binding.fabMenu.setOnClickListener {
-            showCreateFolderDialog()
+            showCreateOptionsMenu()
         }
+    }
+    
+    private fun showCreateOptionsMenu() {
+        val options = arrayOf("Tạo Folder", "Tạo File TXT")
+        MaterialAlertDialogBuilder(this)
+            .setTitle("Tạo mới")
+            .setItems(options) { _, which ->
+                when (which) {
+                    0 -> showCreateFolderDialog()
+                    1 -> showCreateFileDialog()
+                }
+            }
+            .show()
     }
     
     private fun setupObservers() {
@@ -200,6 +215,15 @@ class MainActivity : AppCompatActivity() {
             dialog.dismiss()
         }
         
+        dialogBinding.copyOption.setOnClickListener {
+            if (fileItem.isDirectory) {
+                Toast.makeText(this, "Không thể sao chép thư mục", Toast.LENGTH_SHORT).show()
+            } else {
+                showSelectFolderDialog(fileItem)
+            }
+            dialog.dismiss()
+        }
+        
         dialogBinding.deleteOption.setOnClickListener {
             showDeleteConfirmation(fileItem)
             dialog.dismiss()
@@ -217,10 +241,47 @@ class MainActivity : AppCompatActivity() {
         dialogBinding.createButton.setOnClickListener {
             val folderName = dialogBinding.folderNameEditText.text.toString().trim()
             if (folderName.isNotEmpty()) {
-                viewModel.createFolder(folderName)
+                viewModel.createFolder(folderName) { success, error ->
+                    if (success) {
+                        Toast.makeText(this, "Đã tạo folder thành công", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this, error ?: "Lỗi tạo folder", Toast.LENGTH_SHORT).show()
+                    }
+                }
                 dialog.dismiss()
             } else {
                 dialogBinding.folderNameLayout.error = "Vui lòng nhập tên folder"
+            }
+        }
+        
+        dialogBinding.cancelButton.setOnClickListener {
+            dialog.dismiss()
+        }
+        
+        dialog.show()
+    }
+    
+    private fun showCreateFileDialog() {
+        val dialogBinding = DialogCreateFileBinding.inflate(layoutInflater)
+        val dialog = MaterialAlertDialogBuilder(this)
+            .setView(dialogBinding.root)
+            .create()
+        
+        dialogBinding.createButton.setOnClickListener {
+            val fileName = dialogBinding.fileNameEditText.text.toString().trim()
+            val fileContent = dialogBinding.fileContentEditText.text.toString()
+            
+            if (fileName.isNotEmpty()) {
+                viewModel.createTextFile(fileName, fileContent) { success, error ->
+                    if (success) {
+                        Toast.makeText(this, "Đã tạo file thành công", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this, error ?: "Lỗi tạo file", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                dialog.dismiss()
+            } else {
+                dialogBinding.fileNameLayout.error = "Vui lòng nhập tên file"
             }
         }
         
@@ -273,6 +334,84 @@ class MainActivity : AppCompatActivity() {
     private fun shareFile(fileItem: FileItem) {
         // Implement share functionality
         Toast.makeText(this, "Chia sẻ ${fileItem.name}", Toast.LENGTH_SHORT).show()
+    }
+    
+    private fun showSelectFolderDialog(fileItem: FileItem) {
+        val dialogBinding = DialogSelectFolderBinding.inflate(layoutInflater)
+        val dialog = MaterialAlertDialogBuilder(this)
+            .setView(dialogBinding.root)
+            .create()
+        
+        var currentPath = viewModel.getRootPath()
+        val folderAdapter = FileAdapter(
+            onItemClick = { folder ->
+                // Điều hướng vào thư mục con
+                currentPath = folder.path
+                loadFoldersForDialog(dialogBinding, currentPath, fileItem)
+            },
+            onItemLongClick = { } // Không cần long click trong dialog chọn folder
+        )
+        
+        dialogBinding.foldersRecyclerView.apply {
+            layoutManager = LinearLayoutManager(this@MainActivity)
+            adapter = folderAdapter
+        }
+        
+        // Load folders ban đầu
+        loadFoldersForDialog(dialogBinding, currentPath, fileItem)
+        
+        // Cập nhật path hiển thị
+        dialogBinding.currentPathText.text = currentPath
+        
+        // Nút lên thư mục cha
+        dialogBinding.upButton.setOnClickListener {
+            val parentPath = java.io.File(currentPath).parent
+            if (parentPath != null && parentPath != "/") {
+                currentPath = parentPath
+                loadFoldersForDialog(dialogBinding, currentPath, fileItem)
+                dialogBinding.currentPathText.text = currentPath
+            }
+        }
+        
+        // Nút về home
+        dialogBinding.homeButton.setOnClickListener {
+            currentPath = viewModel.getRootPath()
+            loadFoldersForDialog(dialogBinding, currentPath, fileItem)
+            dialogBinding.currentPathText.text = currentPath
+        }
+        
+        // Chọn thư mục hiện tại
+        dialogBinding.selectCurrentButton.setOnClickListener {
+            viewModel.copyFile(fileItem, currentPath) { success, error ->
+                if (success) {
+                    Toast.makeText(this, "Đã sao chép file thành công", Toast.LENGTH_SHORT).show()
+                    dialog.dismiss()
+                } else {
+                    Toast.makeText(this, error ?: "Lỗi sao chép file", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+        
+        dialogBinding.cancelButton.setOnClickListener {
+            dialog.dismiss()
+        }
+        
+        dialog.show()
+    }
+    
+    private fun loadFoldersForDialog(
+        dialogBinding: DialogSelectFolderBinding,
+        path: String,
+        fileItem: FileItem
+    ) {
+        viewModel.getSubFolders(path) { folders ->
+            // Lọc bỏ thư mục chứa file nguồn để tránh copy vào chính nó
+            val filteredFolders = folders.filter { 
+                !fileItem.path.startsWith(it.path)
+            }
+            (dialogBinding.foldersRecyclerView.adapter as? FileAdapter)?.submitList(filteredFolders)
+            dialogBinding.currentPathText.text = path
+        }
     }
     
     private fun formatFileSize(size: Long): String {
